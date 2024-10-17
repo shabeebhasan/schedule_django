@@ -1,16 +1,15 @@
-from django.shortcuts import render
-
-# Create your views here.
-from rest_framework import generics
-from .models import TimeSlot
-from .serializers import TimeSlotSerializer
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from .models import WeeklySchedule
+from .serializers import WeeklyScheduleSerializer
 
-class TimeSlotListCreateView(generics.ListCreateAPIView):
-    permission_classes = [IsAuthenticated]
-    queryset = TimeSlot.objects.all()
-    serializer_class = TimeSlotSerializer
+# ViewSet for managing weekly schedules
+class WeeklyScheduleViewSet(viewsets.ModelViewSet):
+    queryset = WeeklySchedule.objects.all()
+    serializer_class = WeeklyScheduleSerializer
+    permission_classes = [IsAuthenticated]  # JWT auth requirement
 
-class TimeSlotDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = TimeSlot.objects.all()
-    serializer_class = TimeSlotSerializer
+    def create(self, request, *args, **kwargs):
+        # Use the default create method to ensure the response includes the 'id' field
+        response = super().create(request, *args, **kwargs)
+        return response
