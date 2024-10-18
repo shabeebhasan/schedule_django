@@ -95,8 +95,8 @@ Example:
 
 ```json
 {
-    "username": "your_username",
-    "password": "your_password"
+    "username": "admin",
+    "password": "admin"
 }
 ```
 
